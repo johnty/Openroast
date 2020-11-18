@@ -22,6 +22,8 @@ class RoastGraphWidget():
             animated=False, updateMethod=None, animatingMethod=None):
         self.graphXValueList = graphXValueList or []
         self.graphYValueList = graphYValueList or []
+        self.graphYValueList2 = []
+        self.extTemp = 0
         self.counter = 0
         self.updateMethod = updateMethod
         self.animated = animated
@@ -67,7 +69,8 @@ class RoastGraphWidget():
         self.graphAxes = self.graphFigure.add_subplot(111)
         self.graphAxes.plot_date(self.graphXValueList, self.graphYValueList,
             '#8ab71b')
-
+        self.graphAxes.plot_date(self.graphXValueList, self.graphYValueList2,
+            '#8a00ff')
         # Add formatting to the graphs.
         self.graphAxes.set_ylabel('TEMPERATURE (°F)')
         self.graphAxes.set_xlabel('TIME')
@@ -90,10 +93,12 @@ class RoastGraphWidget():
         currentTime = datetime.datetime.fromtimestamp(self.counter)
         self.graphXValueList.append(matplotlib.dates.date2num(currentTime))
         self.graphYValueList.append(xCoord)
+        self.graphYValueList2.append(self.extTemp)
 
     def clear_graph(self):
         self.graphXValueList = []
         self.graphYValueList = []
+        self.graphYValueList2 = []
         self.counter = 0
         self.graphFigure.clear()
 
